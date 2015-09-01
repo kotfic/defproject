@@ -24,7 +24,7 @@ Remove elements that return nil."
 (defun defproject-get-dir-locals (args)
   "Filter ARGS, returning cons cels of (PROPERTY . VALUE)."
   (defproject--filter-plist (lambda (key val)
-		  (when (-defproject-ismode? key)
+		  (when (defproject--ismode? key)
 		    (cons key val))) args))
 
 (defun defproject-eval-dir-locals (args)
