@@ -1,11 +1,26 @@
 ;;; defproject -- Manage dir-locals and project specifics
 ;;;
+;;;  Copyright (C) 2015 Christopher Kotfila
+;;;
+;;; This program is free software: you can redistribute it and/or modify
+;;; it under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation, either version 3 of the License, or
+;;; (at your option) any later version.
+;;; 
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;; 
+;;; You should have received a copy of the GNU General Public License
+;;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;;;
 ;;; Commentary:
 ;;;
 ;;; Code:
 
 (defun defproject--ismode? (symbol)
-  "Predicate for determining if a symbol is a mode"
+  "Predicate for determining if a symbol is a mode symbol"
   (or (s-contains? "-mode" (symbol-name symbol))
       (equal ":nil" (symbol-name symbol))))
 
@@ -22,14 +37,14 @@ Remove elements that return nil."
 
 
 (defun defproject-get-dir-locals (args)
-  "Filter ARGS, returning cons cels of (PROPERTY . VALUE)."
+  "Filter ARGS, returning cons cels of (PROPERTY . VALUE) for mode properties."
   (defproject--filter-plist (lambda (key val)
 		  (when (defproject--ismode? key)
 		    (cons key val))) args))
 
 (defun defproject-eval-dir-locals (args)
   "Map over each (MODE . VARS) in dir-locals like list ARGS.
-Evaluate each cdr in VARS list unless the car is 'eval."
+Evaluate each cdr in VARS list unless the car is `eval'."
   ;; for each mode and its var/value list
   (-map (lambda (mode_args)
 	  (let ((mode (car mode_args))
@@ -47,8 +62,12 @@ Evaluate each cdr in VARS list unless the car is 'eval."
 
 (defmacro defproject(project-name &rest args)
   "Define a project of type PROJECT-NAME.  ARGS is a plist which
-requires a :path symbol as well as mode symbols (e.g. :python-mode).
-Also accepts :vars variable and :init."
+requires a :path symbol and value as well as mode symbols (e.g.,
+:python-mode). Also accepts :vars property and :init property. Code
+found in the :vars property should be a list of variables for use in
+the bodies of the mode properties. :init allows for additional code
+to be executed conditional on the existence of the path defined in
+the :path property."
   (declare (indent 1))
   (let* ((project-name-symbol (if (stringp project-name)
                                   (intern project-name)
