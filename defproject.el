@@ -1,6 +1,8 @@
 ;;; defproject.el --- Manage dir-locals and project specifics
 ;;;
-;;;  Copyright (C) 2015 Christopher Kotfila
+;;; Copyright (C) 2015 Christopher Kotfila
+;;;
+;;; Package-Requires: ((s "1.9.0") (dash "2.11.0"))
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
