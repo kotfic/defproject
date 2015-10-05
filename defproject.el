@@ -22,9 +22,10 @@
 
 ;;; Code:
 
+
 (defun defproject--ismode? (symbol)
   "Predicate for determining if a SYMBOL is a mode symbol."
-  (or (s-contains? "-mode" (symbol-name symbol))
+  (or (s-matches-p ".*-mode$" (symbol-name symbol))
       (equal ":nil" (symbol-name symbol))))
 
 (defun defproject--filter-plist (fn plist)
@@ -51,7 +52,7 @@ Evaluate each cdr in VARS list unless the car is `eval'."
           (let ((mode (car mode_args))
                 (body (cdr mode_args)))
             ;; for each var and its value
-            (cons (intern (s-chop-prefix ":" (symbol-name mode)))
+            (cons (intern (replace-regexp-in-string "^:" "" (symbol-name mode)))
                   (mapcar (lambda (var_val)
                           (let ((var (car var_val))
                                 (val (cdr var_val)))
