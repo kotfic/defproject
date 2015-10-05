@@ -20,16 +20,12 @@
 
 ;;; Commentary:
 
-;;
-
 ;;; Code:
 
-
 (defun defproject--ismode? (symbol)
-  "Predicate for determining if a symbol is a mode symbol"
+  "Predicate for determining if a SYMBOL is a mode symbol."
   (or (s-contains? "-mode" (symbol-name symbol))
       (equal ":nil" (symbol-name symbol))))
-
 
 (defun defproject--filter-plist (fn plist)
   "Apply FN, a lambda function with signatures (key value), to PLIST.
@@ -40,7 +36,6 @@ Remove elements that return nil."
       (push (funcall fn (car pl) (cadr pl)) vals)
       (setq pl (cddr pl)))
     (delq nil (nreverse vals))))
-
 
 (defun defproject-get-dir-locals (args)
   "Filter ARGS, returning cons cels of (PROPERTY . VALUE) for mode properties."
@@ -96,4 +91,5 @@ the :path property."
          ,@(plist-get args :init)))))
 
 (provide 'defproject)
-;;; defproject ends here
+
+;;; defproject.el ends here
