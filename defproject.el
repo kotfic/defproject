@@ -47,12 +47,12 @@ Remove elements that return nil."
   "Map over each (MODE . VARS) in dir-locals like list ARGS.
 Evaluate each cdr in VARS list unless the car is `eval'."
   ;; for each mode and its var/value list
-  (-map (lambda (mode_args)
+  (mapcar (lambda (mode_args)
           (let ((mode (car mode_args))
                 (body (cdr mode_args)))
             ;; for each var and its value
             (cons (intern (s-chop-prefix ":" (symbol-name mode)))
-                  (-map (lambda (var_val)
+                  (mapcar (lambda (var_val)
                           (let ((var (car var_val))
                                 (val (cdr var_val)))
                             ;; if first element is 'eval pass through
@@ -79,8 +79,8 @@ the :path property."
             (dir-locals (defproject-eval-dir-locals
                           (quote ,(defproject-get-dir-locals args)))))
        (when dir-locals
-         (-map (lambda(class-vars-list)
-                 (-map (lambda(class-var)
+         (mapcar (lambda(class-vars-list)
+                 (mapcar (lambda(class-var)
                          (add-to-list 'safe-local-variable-values class-var))
                        (cdr class-vars-list))) dir-locals)
 
