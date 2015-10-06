@@ -25,7 +25,7 @@
 
 (defun defproject--ismode? (symbol)
   "Predicate for determining if a SYMBOL is a mode symbol."
-  (or (s-matches-p ".*-mode$" (symbol-name symbol))
+  (or (string-match-p ".*-mode$" (symbol-name symbol))
       (equal ":nil" (symbol-name symbol))))
 
 (defun defproject--filter-plist (fn plist)
