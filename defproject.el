@@ -3,7 +3,8 @@
 ;; Copyright (C) 2015 Chris Kotfila
 
 ;; Author:  <kotfic@gmail.com>
-;; Keywords:
+;; Keywords: convenience
+;; Version: 0.1.0
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -71,25 +72,21 @@ the bodies of the mode properties. :init allows for additional code
 to be executed conditional on the existence of the path defined in
 the :path property."
   (declare (indent 1))
-  (let* ((project-name-symbol (if (stringp project-name)
-                                  (intern project-name)
-                                project-name)))
-
-    `(let* ((project-path ,(plist-get args :path))
-            ,@(plist-get args :vars)
-            (dir-locals (defproject-eval-dir-locals
-                          (quote ,(defproject-get-dir-locals args)))))
-       (when dir-locals
-         (mapcar (lambda(class-vars-list)
+  `(let* ((project-path ,(plist-get args :path))
+          ,@(plist-get args :vars)
+          (dir-locals (defproject-eval-dir-locals
+                        (quote ,(defproject-get-dir-locals args)))))
+     (when dir-locals
+       (mapcar (lambda(class-vars-list)
                  (mapcar (lambda(class-var)
-                         (add-to-list 'safe-local-variable-values class-var))
-                       (cdr class-vars-list))) dir-locals)
+                           (add-to-list 'safe-local-variable-values class-var))
+                         (cdr class-vars-list))) dir-locals)
 
-         (dir-locals-set-class-variables (quote ,project-name)
-                                         dir-locals))
-       (when (file-exists-p project-path)
-         (dir-locals-set-directory-class project-path (quote ,project-name))
-         ,@(plist-get args :init)))))
+       (dir-locals-set-class-variables (quote ,project-name)
+                                       dir-locals))
+     (when (file-exists-p project-path)
+       (dir-locals-set-directory-class project-path (quote ,project-name))
+       ,@(plist-get args :init))))
 
 (provide 'defproject)
 
