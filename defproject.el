@@ -2,8 +2,8 @@
 
 ;; Copyright (C) 2015 Chris Kotfila
 
-;; Author:  <kotfic@carasgaladon>
-;; Keywords: local
+;; Author:  <kotfic@gmail.com>
+;; Keywords:
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
