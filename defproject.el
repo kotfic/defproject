@@ -1,10 +1,13 @@
-;;; defproject.el --- Manager dir-locals and project specific variables -*- lexical-binding: t; -*-
+;;; defproject.el --- Manager dir-locals and project specific variables
 
 ;; Copyright (C) 2015 Chris Kotfila
 
 ;; Author:  <kotfic@gmail.com>
-;; Keywords: convenience
 ;; Version: 0.1.0
+;; Package-Requires: ((emacs "24"))
+;; Keywords: convenience
+;; URL: https://github.com/kotfic/defproject
+
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
