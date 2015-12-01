@@ -83,10 +83,10 @@ the :path property."
        (mapcar (lambda(class-vars-list)
                  (mapcar (lambda(class-var)
                            (add-to-list 'safe-local-variable-values class-var))
-                         (cdr class-vars-list))) dir-locals)
+                         (cdr class-vars-list))) dir-locals))
 
        (dir-locals-set-class-variables (quote ,project-name)
-                                       dir-locals))
+                                       dir-locals)
      (when (file-exists-p project-path)
        (dir-locals-set-directory-class project-path (quote ,project-name))
        ,@(plist-get args :init))))
